@@ -52,7 +52,7 @@ class MainContentViewController: UIViewController {
     // 이미지 클릭 시 DetailView로 이동
     @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         if let tag = sender.view?.tag {
-            let detailVC = DetailViewController(imageIndex: tag)
+            let detailVC = DetailViewController(person: mockData)
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
     }
