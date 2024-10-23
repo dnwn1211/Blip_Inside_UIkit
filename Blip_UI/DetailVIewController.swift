@@ -34,17 +34,6 @@ let mockData: [Person] = [
             "https://instagram.com/kimsukjun",
             "mailto:kimsukjun@gmail.com"
         ]
-    ),
-    Person(
-        name: "박준혁",
-        hashtag: "#네이비 #먹보 #라이딩 #차",
-        imageName: "man4",
-        tmi: "장점: 포기하지 않고 끝까지 해결하기 \n협업스타일: 의견을 많이 들으려하고 생산적인 회의를 좋아합니다.",
-        socialLinks: [
-            "https://github.com/kimsukjun",
-            "https://instagram.com/kimsukjun",
-            "mailto:kimsukjun@gmail.com"
-        ]
     )
 ]
 
