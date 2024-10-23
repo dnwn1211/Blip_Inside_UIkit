@@ -85,7 +85,7 @@ class PageContentViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         
         navigationController?.setNavigationBarHidden(true, animated: false)
-        view.backgroundColor = UIColor(named: "BackgroundColor")
+        view.backgroundColor = .black
         
         setupDetailView()
         setupUI()
@@ -153,21 +153,24 @@ class PageContentViewController: UIViewController, UIScrollViewDelegate {
     func configurePerson() {
         profileImageView.image = UIImage(named: person.imageName)
         nameLabel.text = person.name
+        nameLabel.textColor = .white // Set font color to white
         hashtagLabel.text = person.hashtag
+        hashtagLabel.textColor = .white // Set font color to white
         tmiLabel.text = person.tmi
-        
+        tmiLabel.textColor = .white // Set font color to white
+
         for (index, link) in person.socialLinks.enumerated() {
             let button = UIButton(type: .system)
             
             switch index {
             case 0:
-                button.setImage(UIImage(named: "git"), for: .normal) // GitHub 아이콘
+                button.setImage(UIImage(named: "git"), for: .normal) // GitHub icon
             case 1:
-                button.setImage(UIImage(named: "instagram"), for: .normal) // Instagram 아이콘
+                button.setImage(UIImage(named: "instagram"), for: .normal) // Instagram icon
             case 2:
-                button.setImage(UIImage(named: "blog"), for: .normal) // 이메일 아이콘
+                button.setImage(UIImage(named: "blog"), for: .normal) // Email icon
             default:
-                button.setImage(UIImage(systemName: "link"), for: .normal) // 기본 링크 아이콘
+                button.setImage(UIImage(systemName: "link"), for: .normal) // Default link icon
             }
             
             button.tintColor = .purple
@@ -176,6 +179,7 @@ class PageContentViewController: UIViewController, UIScrollViewDelegate {
             socialButtonsStackView.addArrangedSubview(button)
         }
     }
+
 
     
     @objc func socialButtonTapped(_ sender: UIButton) {
