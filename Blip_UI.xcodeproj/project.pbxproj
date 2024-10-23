@@ -14,6 +14,7 @@
 		1E996C402CC7689700D13B88 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1E996C3F2CC7689700D13B88 /* Base */; };
 		1E996C482CC7695900D13B88 /* MainContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E996C472CC7695900D13B88 /* MainContentViewController.swift */; };
 		1E996C4A2CC769B400D13B88 /* DetailVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E996C492CC769B300D13B88 /* DetailVIewController.swift */; };
+		3FB065AC2CC8ADC3008589DF /* PageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB065AB2CC8ADC3008589DF /* PageContentViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		1E996C412CC7689700D13B88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E996C472CC7695900D13B88 /* MainContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentViewController.swift; sourceTree = "<group>"; };
 		1E996C492CC769B300D13B88 /* DetailVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVIewController.swift; sourceTree = "<group>"; };
+		3FB065AB2CC8ADC3008589DF /* PageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContentViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				1E996C3C2CC7689700D13B88 /* Assets.xcassets */,
 				1E996C3E2CC7689700D13B88 /* LaunchScreen.storyboard */,
 				1E996C412CC7689700D13B88 /* Info.plist */,
+				3FB065AB2CC8ADC3008589DF /* PageContentViewController.swift */,
 			);
 			path = Blip_UI;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 				1E996C382CC7689500D13B88 /* ContentViewController.swift in Sources */,
 				1E996C4A2CC769B400D13B88 /* DetailVIewController.swift in Sources */,
 				1E996C482CC7695900D13B88 /* MainContentViewController.swift in Sources */,
+				3FB065AC2CC8ADC3008589DF /* PageContentViewController.swift in Sources */,
 				1E996C342CC7689500D13B88 /* AppDelegate.swift in Sources */,
 				1E996C362CC7689500D13B88 /* SceneDelegate.swift in Sources */,
 			);
