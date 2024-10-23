@@ -60,7 +60,7 @@ class MainContentViewController: UIViewController {
 
     @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         if let tag = sender.view?.tag {
-            let detailVC = DetailViewController(imageIndex: tag)
+            let detailVC = DetailViewController(selectedIndex: tag)
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
     }
