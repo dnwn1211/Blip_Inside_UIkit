@@ -1,250 +1,191 @@
+
 import UIKit
 
-class DetailViewController: UIViewController, UIScrollViewDelegate {
-    
-    var person: Person
-    private let screenHeight = UIScreen.main.bounds.height
+let mockData: [Person] = [
+    Person(
+        name: "김석준",
+        hashtag: "#파란색 #해산물NO #게임 #헬스 #옷구경 #돌림판",
+        imageName: "man1",
+        tmi: "장점: 최대한 긍정적으로 생각하기 \n협업스타일: 최대한 맞추려고 노력하고 협업을 하다가 이건 아니다 싶을 때 즉각적인 질문과 피드백으로 빠르게 문제 상황을 해결하는 것을 좋아합니다.",
+        socialLinks: [
+            "https://github.com",
+            "https://instagram.com",
+            "https://www.google.com"
+        ]
+    ),
+    Person(
+        name: "양정무",
+        hashtag: "#검은색 #소고기 #클라이밍 #클라이밍 러버 #브랜드",
+        imageName: "man2",
+        tmi: "장점: 빠른 상황판단 \n협업 스타일: 최대한 협조하기",
+        socialLinks: [
+            "https://github.com/kimsukjun",
+            "https://instagram.com/kimsukjun",
+            "mailto:kimsukjun@gmail.com"
+        ]
+    ),
+    Person(
+        name: "박진홍",
+        hashtag: "#올리브 그린 #면과고기조합 #커피 브루잉 #강아지 #봄이 #배변 #산책",
+        imageName: "man3",
+        tmi: "장점: 이해와 응용이 빠른편입니다. \n협업스타일: 반드시 반대해야 할 이유나 비합리적인 선택만 아니라면 대부분의 의견에 동의하고 잘 따라가는 편입니다.",
+        socialLinks: [
+            "https://github.com/kimsukjun",
+            "https://instagram.com/kimsukjun",
+            "mailto:kimsukjun@gmail.com"
+        ]
+    ),
+    Person(
+        name: "박준혁",
+        hashtag: "#네이비 #먹보 #라이딩 #차",
+        imageName: "man4",
+        tmi: "장점: 포기하지 않고 끝까지 해결하기 \n협업스타일: 의견을 많이 들으려하고 생산적인 회의를 좋아합니다.",
+        socialLinks: [
+            "https://github.com/kimsukjun",
+            "https://instagram.com/kimsukjun",
+            "mailto:kimsukjun@gmail.com"
+        ]
+    )
+]
 
-    // imageIndex를 위한 새로운 초기화 메서드
-    init(imageIndex: Int) {
-        switch imageIndex {
-        case 1:
-            self.person = Person(
-                name: "김석준",
-                hashtag: "#파란색 #해산물NO #게임 #헬스 #옷구경 #돌림판",
-                imageName: "man1",
-                tmi: "장점: 최대한 긍정적으로 생각하기 \n협업스타일: 최대한 맞추려고 노력하고 협업을 하다가 이건 아니다 싶을 때 즉각적인 질문과 피드백으로 빠르게 문제 상황을 해결하는 것을 좋아합니다.",
-                socialLinks: [
-                    "https://github.com",
-                    "https://instagram.com",
-                    "https://www.google.com"
-                ]
-            )
-        case 2:
-            self.person = Person(
-                name: "양정무",
-                hashtag: "#검은색 #소고기 #클라이밍 #클라이밍 러버 #브랜드",
-                imageName: "man2",
-                tmi: "장점: 빠른 상황판단 \n협업 스타일: 최대한 협조하기",
-                socialLinks: [
-                    "https://github.com/kimsukjun",
-                    "https://instagram.com/kimsukjun",
-                    "mailto:kimsukjun@gmail.com"
-                ]
-            )
-        case 3:
-            self.person = Person(
-                name: "박진홍",
-                hashtag: "#올리브 그린 #면과고기조합 #커피 브루잉 #강아지 #봄이 #배변 #산책",
-                imageName: "man3",
-                tmi: "장점: 이해와 응용이 빠른편입니다. \n협업스타일: 반드시 반대해야 할 이유나 비합리적인 선택만 아니라면 대부분의 의견에 동의하고 잘 따라가는 편입니다.",
-                socialLinks: [
-                    "https://github.com/kimsukjun",
-                    "https://instagram.com/kimsukjun",
-                    "mailto:kimsukjun@gmail.com"
-                ]
-            )
-        case 4:
-            self.person = Person(
-                name: "박준혁",
-                hashtag: "#네이비 #먹보 #라이딩 #차",
-                imageName: "man4",
-                tmi: "장점: 포기하지 않고 끝까지 해결하기 \n협업스타일: 의견을 많이 들으려하고 생산적인 회의를 좋아합니다.",
-                socialLinks: [
-                    "https://github.com/kimsukjun",
-                    "https://instagram.com/kimsukjun",
-                    "mailto:kimsukjun@gmail.com"
-                ]
-            )
-        default:
-            self.person = mockData
-        }
+class DetailViewController: UIViewController {
+    
+    // PageVC 에서 내부적으로 PageContentVC 의 View 를 자신의 View 에서 교체하면서 보여줌
+    private var pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+    
+    // PageVC 에서 보여줄 Page 를 담고 있는 프로퍼티
+    private var pages: [PageContentViewController] = []
+    
+    // 현재 Page 의 인덱스를 갖고 있는 프로퍼티
+    // DetailView 가 초기화 될때 해당 인덱스의 VC 를 보여주기 위함
+    private var currentIndex: Int
+    
+    init(selectedIndex: Int) {
+        self.currentIndex = selectedIndex
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // Create social media buttons
-    var socialButtonsStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 20
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-    
-    var contentView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    var profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
-    
-    var nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 26)
-        return label
-    }()
-    
-    var hashtagLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        return label
-    }()
-    
-    var tmiLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    var spacer: UIView = {
-        let spacer = UIView()
-        spacer.translatesAutoresizingMaskIntoConstraints = false
-        spacer.backgroundColor = .clear
-        return spacer
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //네비 바 숨기기
         navigationController?.setNavigationBarHidden(true, animated: false)
-        view.backgroundColor = UIColor(named: "BackgroundColor")
+        //배경색 설정
+        view.backgroundColor = .background
         
-        setupDetailView()
-        setupUI()
-        configurePerson()
+        setupPageViewController()
+        setupDelegate()
     }
     
-    func setupDetailView() {
-        view.addSubview(profileImageView)
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        scrollView.delegate = self
+    // 페이지로 사용할 뷰컨트롤러들 생성
+    func setupPageViewController() {
         
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
-    }
-    
-    func setupUI() {
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(hashtagLabel)
-        contentView.addSubview(tmiLabel)
-        contentView.addSubview(socialButtonsStackView)
-        contentView.addSubview(spacer)
-        
-        NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
-            profileImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            profileImageView.widthAnchor.constraint(equalToConstant: 200),
-            profileImageView.heightAnchor.constraint(equalToConstant: 600),
-            
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 620),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            nameLabel.heightAnchor.constraint(equalToConstant: 50),
-            
-            hashtagLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-            hashtagLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            hashtagLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            hashtagLabel.heightAnchor.constraint(equalToConstant: 50),
-            
-            tmiLabel.topAnchor.constraint(equalTo: hashtagLabel.bottomAnchor, constant: 10),
-            tmiLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            tmiLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            
-            // Social Buttons StackView layout
-            socialButtonsStackView.topAnchor.constraint(equalTo: tmiLabel.bottomAnchor, constant: 20),
-            socialButtonsStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            
-            spacer.topAnchor.constraint(equalTo: socialButtonsStackView.bottomAnchor, constant: 20),
-            spacer.heightAnchor.constraint(equalToConstant: screenHeight - (nameLabel.frame.height + hashtagLabel.frame.height + tmiLabel.frame.height + 40)),
-            
-            spacer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
-        ])
-    }
-    
-    func configurePerson() {
-        profileImageView.image = UIImage(named: person.imageName)
-        nameLabel.text = person.name
-        hashtagLabel.text = person.hashtag
-        tmiLabel.text = person.tmi
-        
-        for (index, link) in person.socialLinks.enumerated() {
-            let button = UIButton(type: .system)
-            
-            switch index {
-            case 0:
-                button.setImage(UIImage(named: "git"), for: .normal) // GitHub 아이콘
-            case 1:
-                button.setImage(UIImage(named: "instagram"), for: .normal) // Instagram 아이콘
-            case 2:
-                button.setImage(UIImage(named: "blog"), for: .normal) // 이메일 아이콘
-            default:
-                button.setImage(UIImage(systemName: "link"), for: .normal) // 기본 링크 아이콘
-            }
-            
-            button.tintColor = .purple
-            button.addTarget(self, action: #selector(socialButtonTapped(_:)), for: .touchUpInside)
-            button.tag = index
-            socialButtonsStackView.addArrangedSubview(button)
+        // 데이터 배열로 ContentViewController 생성
+        self.pages = mockData.map { item in
+            PageContentViewController(person: item)
         }
+        
+        // 초기 페이지 설정
+        pageViewController.setViewControllers(
+            [pages[currentIndex]],
+            direction: .forward,
+            animated: true
+        )
+        
+        // PageVC 는 Container VC 이므로 자식 VC 의 생명주기를 관리하기 위해 부모 - 자식 관계형성
+        addChild(pageViewController)
+        
+        // 뷰를 추가 (뷰 계층)
+        view.addSubview(pageViewController.view)
+        pageViewController.view.frame = view.bounds
+        
+        // 자식 뷰컨트롤러에게 이동이 완료됐음을 알림
+        pageViewController.didMove(toParent: self)
     }
-
     
-    @objc func socialButtonTapped(_ sender: UIButton) {
-        let index = sender.tag
-        if index < person.socialLinks.count, let url = URL(string: person.socialLinks[index]) {
-            UIApplication.shared.open(url)
-        }
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let imageHeight = profileImageView.frame.height
-        let alpha = 1 - (offsetY / imageHeight)
-        profileImageView.alpha = max(0, alpha)
+    /// PageViewController의 DataSource와 Delegate를 설정하는 메서드
+    /// - Note:
+    ///   - DataSource: 페이지 콘텐츠와 순서를 관리 (이전/다음 페이지를 제공)
+    ///   - Delegate: 페이지 전환 상태 및 이벤트를 처리
+    func setupDelegate() {
+        // 페이지 순서와 내용을 관리하는 DataSource 설정
+        pageViewController.dataSource = self
+        
+        // 페이지 전환 이벤트를 처리하는 Delegate 설정
+        pageViewController.delegate = self
     }
 }
 
-// Person 구조체
-struct Person {
-    let name: String
-    let hashtag: String
-    let imageName: String
-    let tmi: String
-    let socialLinks: [String]
+extension DetailViewController: UIPageViewControllerDataSource{
+    /// 이전 페이지의 ViewController를 반환
+    /// - Parameters:
+    ///   - pageViewController: 현재 PageViewController
+    ///   - viewController: 현재 표시된 ViewController
+    /// - Returns: 이전 페이지의 ViewController. 첫 페이지인 경우 nil 반환
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        // 1. 현재 ViewController가 PageContentViewController 타입인지
+        // 2. 현재 ViewController가 pages 배열에 있는지
+        // 3. 이전 페이지가 존재하는지 (현재 인덱스가 마지막이 아닌지)
+        guard let currentVC = viewController as? PageContentViewController,
+              let index = pages.firstIndex(of: currentVC),
+              index > 0 else {
+            return nil
+        }
+        return pages[index - 1]
+    }
+    
+    /// 다음 페이지의 ViewController를 반환
+    /// - Parameters:
+    ///   - pageViewController: 현재 PageViewController
+    ///   - viewController: 현재 표시된 ViewController
+    /// - Returns: 다음 페이지의 ViewController. 마지막 페이지인 경우 nil 반환
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        // 1. 현재 ViewController가 PageContentViewController 타입인지
+        // 2. 현재 ViewController가 pages 배열에 있는지
+        // 3. 다음 페이지가 존재하는지 (현재 인덱스가 마지막이 아닌지)
+        guard let currentVC = viewController as? PageContentViewController,
+              let index = pages.firstIndex(of: currentVC),
+              index < pages.count - 1 else {
+            return nil
+        }
+        return pages[index + 1]
+    }
 }
 
-// 테스트용 mockData
-let mockData: Person = Person(name: "코카콜라", hashtag: "#콜라 #펩시 #사이다", imageName: "man4", tmi: "코카콜라의 원래 색은 초록색이었다는 사실 알고 있었어?", socialLinks: ["https://github.com", "https://instagram.com"])
+extension DetailViewController: UIPageViewControllerDelegate {
+    /// 페이지 전환이 완료된 후 호출되는 메서드
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        // 전환이 완료되었고 현재 보여줄 VC 가 PageContentVC 유형이고, 해당 VC 가 pages 배열에 존재하는지 확인
+        if completed,
+           let currentVC = pageViewController.viewControllers?.first as? PageContentViewController,
+           let index = pages.firstIndex(of: currentVC) {
+            currentIndex = index
+        }
+    }
+}
+
+import SwiftUI
+
+struct Preview: UIViewControllerRepresentable {
+    typealias UIViewControllerType = DetailViewController
+    
+    func makeUIViewController(context: Context) -> DetailViewController {
+        return DetailViewController(selectedIndex: 0)
+    }
+    
+    func updateUIViewController(_ uiViewController: DetailViewController, context: Context) {
+        
+    }
+    
+}
+        
+@available(iOS 13.0.0, *)
+struct UIPreview: PreviewProvider {
+    static var previews: some View {
+        Preview()
+    }
+}
