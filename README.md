@@ -7,7 +7,7 @@
 - [설치 방법](#설치-방법)
 - [사용법](#사용법)
 - [스크린샷](#스크린샷)
-- [기여 방법](#기여-방법)
+- [기여자](#기여자)
 - [라이선스](#라이선스)
 
 ## 기능
@@ -48,9 +48,10 @@
 ![Detail Screen](./screenshots/detail_screen.png)
 *Detail View with Team Member Information*
 
-## 기여 방법
-1. 이 프로젝트에 기여하고 싶다면 [issue](https://github.com/username/blip-inside/issues)에서 필요한 사항을 확인하세요.
-2. 새로운 기능을 추가하거나 버그를 수정하려면 `fork`를 하고, 작업을 완료한 후에 `Pull Request`를 제출하세요.
+## 기여자
+1. 김석준 - https://github.com/dnwn1211
+2. 박진홍 - https://github.com/jbnong07
+3. 양정무 - https://github.com/jeongmuya
 
 ## 라이선스
 이 프로젝트는 MIT 라이선스 하에 배포됩니다. 자세한 내용은 [LICENSE](./LICENSE)를 참조하세요.
