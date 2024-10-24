@@ -35,12 +35,12 @@ class TellViewController: UIViewController {
         manageImageView.layer.opacity = 0.5
 
         // "X" 이미지 추가
-        let xImageView = UIImageView(image: UIImage(named: "x"))
+        let xImageView = UIImageView(image: UIImage(named: "X"))
         xImageView.contentMode = .scaleAspectFit // 이미지 모드 설정
         xImageView.translatesAutoresizingMaskIntoConstraints = false // Auto Layout 사용
 
         // "O" 이미지 추가
-        let oImageView = UIImageView(image: UIImage(named: "o"))
+        let oImageView = UIImageView(image: UIImage(named: "O"))
         oImageView.contentMode = .scaleAspectFit // 이미지 모드 설정
         oImageView.translatesAutoresizingMaskIntoConstraints = false // Auto Layout 사용
 
