@@ -4,6 +4,8 @@ class TellViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.hidesBackButton = true
 
         // 배경색을 검은색으로 설정
         view.backgroundColor = .black
@@ -35,12 +37,12 @@ class TellViewController: UIViewController {
         manageImageView.layer.opacity = 0.5
 
         // "X" 이미지 추가
-        let xImageView = UIImageView(image: UIImage(named: "x"))
+        let xImageView = UIImageView(image: UIImage(named: "X"))
         xImageView.contentMode = .scaleAspectFit // 이미지 모드 설정
         xImageView.translatesAutoresizingMaskIntoConstraints = false // Auto Layout 사용
 
         // "O" 이미지 추가
-        let oImageView = UIImageView(image: UIImage(named: "o"))
+        let oImageView = UIImageView(image: UIImage(named: "O"))
         oImageView.contentMode = .scaleAspectFit // 이미지 모드 설정
         oImageView.translatesAutoresizingMaskIntoConstraints = false // Auto Layout 사용
 
