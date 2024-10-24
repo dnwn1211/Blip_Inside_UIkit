@@ -4,6 +4,8 @@ class TellViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.hidesBackButton = true
 
         // 배경색을 검은색으로 설정
         view.backgroundColor = .black
