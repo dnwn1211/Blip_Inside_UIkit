@@ -235,18 +235,288 @@ class TeamInfoViewController: UIViewController {
     }
     
     @objc func navigateToTrackGoals() {
-        let trackGoalsVC = UIViewController() // 여기에 실제 트랙 목표 화면 추가
-        trackGoalsVC.view.backgroundColor = .white
+        // 새로운 뷰 컨트롤러 생성
+        let trackGoalsVC = UIViewController()
+        trackGoalsVC.view.backgroundColor = .black  // 배경색 검정으로 설정
         trackGoalsVC.title = "트랙 목표"
+        
+        // 스크롤뷰 생성
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        trackGoalsVC.view.addSubview(scrollView)
+        
+        // 스크롤뷰 제약조건 설정
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: trackGoalsVC.view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: trackGoalsVC.view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trackGoalsVC.view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: trackGoalsVC.view.bottomAnchor)
+        ])
+        
+        // 상단 핑크색 배너 생성
+        let bannerView = UIView()
+        bannerView.backgroundColor = UIColor(red: 250/255, green: 87/255, blue: 83/255, alpha: 1) // #FA5753 색상
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(bannerView)
+        
+        // 배너 제약조건 설정
+        NSLayoutConstraint.activate([
+            bannerView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            bannerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            bannerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            bannerView.heightAnchor.constraint(equalToConstant: 80),
+            bannerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+        
+        // 배너 텍스트 ("트랙 목표") 추가
+        let bannerLabel = UILabel()
+        bannerLabel.text = "트랙 목표"
+        bannerLabel.font = .boldSystemFont(ofSize: 24)
+        bannerLabel.textColor = .white
+        bannerLabel.textAlignment = .center
+        bannerLabel.translatesAutoresizingMaskIntoConstraints = false
+        bannerView.addSubview(bannerLabel)
+        
+        // 배너 텍스트 제약조건 설정
+        NSLayoutConstraint.activate([
+            bannerLabel.centerXAnchor.constraint(equalTo: bannerView.centerXAnchor),
+            bannerLabel.centerYAnchor.constraint(equalTo: bannerView.centerYAnchor)
+        ])
+        
+        // 목표 리스트를 감싸는 테두리 뷰 생성
+        let borderView = UIView()
+        borderView.translatesAutoresizingMaskIntoConstraints = false
+        borderView.layer.borderWidth = 2  // 테두리 두께
+        borderView.layer.borderColor = UIColor(red: 250/255, green: 87/255, blue: 83/255, alpha: 1).cgColor  // #FA5753 색상
+        borderView.layer.cornerRadius = 10  // 테두리 모서리 둥글게
+        scrollView.addSubview(borderView)
+        
+        // 목표 리스트를 포함하는 컨테이너 뷰
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        borderView.addSubview(containerView)
+        
+        // 컨테이너 뷰 제약조건 설정
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: borderView.topAnchor, constant: 20),
+            containerView.leadingAnchor.constraint(equalTo: borderView.leadingAnchor, constant: 20),
+            containerView.trailingAnchor.constraint(equalTo: borderView.trailingAnchor, constant: -20),
+            containerView.bottomAnchor.constraint(equalTo: borderView.bottomAnchor, constant: -20)
+        ])
+        
+        // 목표 데이터 설정
+        let goals = [
+            "포트폴리오를 2~3개 만들기",
+            "앱 출시와 운영 경험 쌓기",
+            "앱스토어 반려에 대한 원인 파악과 대처 능력 기르기",
+            "개발자들과의 커뮤니케이션 경험 쌓기",
+            "매일매일 공부하는 습관 들이기"
+        ]
+        
+        var previousAnchor = containerView.topAnchor
+        
+        // 목표 항목들을 하나씩 추가
+        for (index, goal) in goals.enumerated() {
+            // 불릿 포인트와 목표를 담을 스택 뷰
+            let stackView = UIStackView()
+            stackView.axis = .horizontal
+            stackView.spacing = 10
+            stackView.alignment = .top
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            containerView.addSubview(stackView)
+            
+            // 불릿 포인트 레이블
+            let bulletLabel = UILabel()
+            bulletLabel.text = "•"
+            bulletLabel.font = .systemFont(ofSize: 20)
+            bulletLabel.textColor = .white
+            bulletLabel.setContentHuggingPriority(.required, for: .horizontal)
+            
+            // 목표 텍스트 레이블
+            let goalLabel = UILabel()
+            goalLabel.text = goal
+            goalLabel.font = .systemFont(ofSize: 20)
+            goalLabel.textColor = .white
+            goalLabel.numberOfLines = 0
+            
+            // 스택 뷰에 레이블들 추가
+            stackView.addArrangedSubview(bulletLabel)
+            stackView.addArrangedSubview(goalLabel)
+            
+            // 스택 뷰 제약조건 설정
+            NSLayoutConstraint.activate([
+                stackView.topAnchor.constraint(equalTo: previousAnchor, constant: index == 0 ? 0 : 20),
+                stackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                stackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+            ])
+            
+            previousAnchor = stackView.bottomAnchor
+        }
+        
+        // 테두리 뷰의 제약조건 설정
+        NSLayoutConstraint.activate([
+            borderView.topAnchor.constraint(equalTo: bannerView.bottomAnchor, constant: 40),
+            borderView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
+            borderView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20)
+        ])
+        
+        // 마지막 여백을 위한 제약조건 설정
+        NSLayoutConstraint.activate([
+            previousAnchor.constraint(equalTo: containerView.bottomAnchor),
+            borderView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20)
+        ])
+        
+        // 화면 전환
         navigationController?.pushViewController(trackGoalsVC, animated: true)
     }
     
     @objc func navigateToPromises() {
-        let promisesVC = UIViewController() // 여기에 실제 약속 화면 추가
-        promisesVC.view.backgroundColor = .white
+        // 새로운 뷰 컨트롤러 생성
+        let promisesVC = UIViewController()
+        promisesVC.view.backgroundColor = .black  // 배경색 검정으로 설정
         promisesVC.title = "약속"
+        
+        // 스크롤뷰 생성 (컨텐츠가 화면을 넘어갈 경우를 대비)
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        promisesVC.view.addSubview(scrollView)
+        
+        // 스크롤뷰 제약조건 설정
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: promisesVC.view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: promisesVC.view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: promisesVC.view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: promisesVC.view.bottomAnchor)
+        ])
+        
+        // 상단 핑크색 배너 생성
+        let bannerView = UIView()
+        bannerView.backgroundColor = UIColor(red: 250/255, green: 87/255, blue: 83/255, alpha: 1) // #FA5753 색상
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(bannerView)
+        
+        // 배너 제약조건 설정
+        NSLayoutConstraint.activate([
+            bannerView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            bannerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            bannerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            bannerView.heightAnchor.constraint(equalToConstant: 80),
+            bannerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+        
+        // 배너 텍스트 ("약속") 추가
+        let bannerLabel = UILabel()
+        bannerLabel.text = "약속"
+        bannerLabel.font = .boldSystemFont(ofSize: 24)
+        bannerLabel.textColor = .white
+        bannerLabel.textAlignment = .center
+        bannerLabel.translatesAutoresizingMaskIntoConstraints = false
+        bannerView.addSubview(bannerLabel)
+        
+        // 배너 텍스트 제약조건 설정
+        NSLayoutConstraint.activate([
+            bannerLabel.centerXAnchor.constraint(equalTo: bannerView.centerXAnchor),
+            bannerLabel.centerYAnchor.constraint(equalTo: bannerView.centerYAnchor)
+        ])
+        
+        // Time Table 섹션을 감싸는 테두리 뷰 생성
+        let borderView = UIView()
+        borderView.translatesAutoresizingMaskIntoConstraints = false
+        borderView.layer.borderWidth = 2  // 테두리 두께
+        borderView.layer.borderColor = UIColor(red: 250/255, green: 87/255, blue: 83/255, alpha: 1).cgColor  // #FA5753 색상
+        borderView.layer.cornerRadius = 10  // 테두리 모서리 둥글게
+        scrollView.addSubview(borderView)
+        
+        // Time Table 타이틀과 시간표를 포함하는 컨테이너 뷰
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        borderView.addSubview(containerView)
+        
+        // 컨테이너 뷰 제약조건 설정
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: borderView.topAnchor, constant: 20),
+            containerView.leadingAnchor.constraint(equalTo: borderView.leadingAnchor, constant: 20),
+            containerView.trailingAnchor.constraint(equalTo: borderView.trailingAnchor, constant: -20),
+            containerView.bottomAnchor.constraint(equalTo: borderView.bottomAnchor, constant: -20)
+        ])
+        
+        // Time Table 타이틀 생성
+        let titleLabel = UILabel()
+        titleLabel.text = "Time Table"
+        titleLabel.font = .boldSystemFont(ofSize: 28)
+        titleLabel.textColor = .white
+        titleLabel.textAlignment = .center
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(titleLabel)
+        
+        // Time Table 타이틀 제약조건 설정
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+        ])
+        
+        // 시간표 데이터 설정
+        let schedules = [
+            ("09:00", "출석 체크"),
+            ("09:30 - 10:30", "알고리즘 풀면서 뇌 깨우기"),
+            ("12:00 - 13:00", "점심시간"),
+            ("16:00", "중간 인증"),
+            ("18:00 - 19:00", "저녁시간"),
+            ("19:00 - 20:30", "코드 공유, 의견 나누기"),
+            ("20:30 ~", "TIL 작성하기")
+        ]
+        
+        var previousAnchor = titleLabel.bottomAnchor
+        
+        // 시간표 항목들을 하나씩 추가
+        for (time, activity) in schedules {
+            // 시간 레이블 생성
+            let timeLabel = UILabel()
+            timeLabel.text = time
+            timeLabel.font = .boldSystemFont(ofSize: 20)
+            timeLabel.textColor = .white
+            timeLabel.translatesAutoresizingMaskIntoConstraints = false
+            containerView.addSubview(timeLabel)
+            
+            // 활동 내용 레이블 생성
+            let activityLabel = UILabel()
+            activityLabel.text = activity
+            activityLabel.font = .systemFont(ofSize: 20)
+            activityLabel.textColor = .white
+            activityLabel.translatesAutoresizingMaskIntoConstraints = false
+            containerView.addSubview(activityLabel)
+            
+            // 레이블들의 제약조건 설정
+            NSLayoutConstraint.activate([
+                timeLabel.topAnchor.constraint(equalTo: previousAnchor, constant: 30),
+                timeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                
+                activityLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 8),
+                activityLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                activityLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+            ])
+            
+            previousAnchor = activityLabel.bottomAnchor
+        }
+        
+        // 테두리 뷰의 제약조건 설정
+        NSLayoutConstraint.activate([
+            borderView.topAnchor.constraint(equalTo: bannerView.bottomAnchor, constant: 40),
+            borderView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
+            borderView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20)
+        ])
+        
+        // 마지막 여백을 위한 제약조건 설정
+        NSLayoutConstraint.activate([
+            previousAnchor.constraint(equalTo: containerView.bottomAnchor),
+            borderView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20)
+        ])
+        
+        // 화면 전환
         navigationController?.pushViewController(promisesVC, animated: true)
     }
+
     
     // MainContentViewController로 이동 (팀원 소개 클릭 시)
     @objc func navigateToMainContent() {
