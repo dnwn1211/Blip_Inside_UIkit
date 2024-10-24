@@ -8,19 +8,20 @@ class MainContentViewController: UIViewController {
         // 배경색을 ContentViewController와 동일하게 설정
         view.backgroundColor = .black
               
-        self.navigationItem.hidesBackButton = true
+        self.navigationItem.hidesBackButton = false
         
         // 상단 이미지 추가 (logo)
         let logoImageView = UIImageView(image: UIImage(named: "logo"))
         logoImageView.contentMode = .scaleAspectFit
-        logoImageView.frame = CGRect(x: (view.frame.width - 200) / 2, y: 100, width: 200, height: 230)
+        // 로고를 위로 올림
+        logoImageView.frame = CGRect(x: (view.frame.width - 200) / 2, y: 50, width: 200, height: 230)
         logoImageView.isUserInteractionEnabled = true
         let logoTapGesture = UITapGestureRecognizer(target: self, action: #selector(logoTapped))
         logoImageView.addGestureRecognizer(logoTapGesture)
         view.addSubview(logoImageView)
 
-        // 가로 스크롤 이미지 추가
-        let scrollView = UIScrollView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 500))
+        // 가로 스크롤 이미지 추가 (더 아래로 내림)
+        let scrollView = UIScrollView(frame: CGRect(x: 0, y: 350, width: view.frame.width, height: 500))
         scrollView.showsHorizontalScrollIndicator = false
         view.addSubview(scrollView)
 
@@ -58,7 +59,7 @@ class MainContentViewController: UIViewController {
     // 스크롤 이미지 클릭 시 DetailViewController로 이동
     @objc func scrollImageTapped(_ sender: UITapGestureRecognizer) {
         if let tag = sender.view?.tag {
-            let detailVC = DetailViewController(selectedIndex: tag)
+            let detailVC = DetailViewController(selectedIndex: tag - 1)
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
     }

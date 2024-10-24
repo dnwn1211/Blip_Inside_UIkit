@@ -62,7 +62,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         //네비 바 숨기기
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: true)
         //배경색 설정
         view.backgroundColor = .background
         
