@@ -79,9 +79,9 @@ class ContentViewController: UIViewController {
             characterImageViews.append(characterImageView) // 이미지 뷰 배열에 추가
             
             switch index {
-            case 1, 2, 3:
+            case 1, 4, 3:
                 firstRowStackView.addArrangedSubview(characterImageView) // 첫째 줄에 추가
-            case 4, 5:
+            case 2, 5:
                 secondRowStackView.addArrangedSubview(characterImageView) // 둘째 줄에 추가
             case 6, 7, 8:
                 thirdRowStackView.addArrangedSubview(characterImageView) // 셋째 줄에 추가

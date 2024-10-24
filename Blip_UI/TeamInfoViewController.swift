@@ -5,6 +5,9 @@ class TeamInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.hidesBackButton = true
+
+        
         view.backgroundColor = .black // 배경색 설정
         
         // 팀 로고 이미지 추가
@@ -42,7 +45,7 @@ class TeamInfoViewController: UIViewController {
             stackView.translatesAutoresizingMaskIntoConstraints = false
             
             // 이미지 추가
-            let imageView = UIImageView(image: UIImage(named: "zep\(index + 1)"))
+            let imageView = UIImageView(image: UIImage(named: "zep\(index + 4)"))
             imageView.contentMode = .scaleAspectFit
             imageView.frame = CGRect(x: 0, y: 0, width: 40, height: 40) // 이미지 크기 설정
             
@@ -235,17 +238,149 @@ class TeamInfoViewController: UIViewController {
     }
     
     @objc func navigateToTrackGoals() {
-        let trackGoalsVC = UIViewController() // 여기에 실제 트랙 목표 화면 추가
-        trackGoalsVC.view.backgroundColor = .white
-        trackGoalsVC.title = "트랙 목표"
-        navigationController?.pushViewController(trackGoalsVC, animated: true)
+        let teamIntroVC = UIViewController() // 여기에 실제 팀 소개 화면 추가
+        
+        let backgroundHeight: CGFloat = 100
+        let pageLabel: UILabel = {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = "트랙 목표"
+            label.font = .boldSystemFont(ofSize: 32)
+            label.textColor = .white
+            
+            return label
+        }()
+        let detailLabel: UILabel = {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = "● 포트 폴리오를 2~3개 만들기\n\n● 앱 출시와 운영 경험 쌓기\n\n● 앱스토어 반려에 대한 원인 파악과 대처 능력 기르지\n\n● 개발자들과의 커뮤니케이션 경험 쌓기\n\n● 매일매일 공부하는 습관 들이기"
+            label.textColor = .white
+            label.numberOfLines = 0
+            label.lineBreakMode = .byWordWrapping
+            label.font = .systemFont(ofSize: 20)
+            
+            return label
+        }()
+        let titleBackground: UIView = {
+            let background = UIView()
+            background.translatesAutoresizingMaskIntoConstraints = false
+            background.backgroundColor = .titleMain
+            
+            return background
+        }()
+        let detailBorder: UIView = {
+            let border = UIView()
+            border.translatesAutoresizingMaskIntoConstraints = false
+            border.backgroundColor = .clear
+            border.layer.borderColor = UIColor.titleMain.cgColor
+            border.layer.borderWidth = 4
+            
+            return border
+        }()
+        
+        teamIntroVC.view.backgroundColor = .black
+        teamIntroVC.view.addSubview(titleBackground)
+        teamIntroVC.view.addSubview(pageLabel)
+        teamIntroVC.view.addSubview(detailLabel)
+        teamIntroVC.view.addSubview(detailBorder)
+        
+        NSLayoutConstraint.activate([
+            pageLabel.topAnchor.constraint(equalTo: teamIntroVC.view.safeAreaLayoutGuide.topAnchor, constant: backgroundHeight / 2),
+            pageLabel.centerXAnchor.constraint(equalTo: teamIntroVC.view.centerXAnchor),
+            
+            titleBackground.topAnchor.constraint(equalTo: teamIntroVC.view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            titleBackground.heightAnchor.constraint(equalToConstant: backgroundHeight),
+            titleBackground.leadingAnchor.constraint(equalTo: teamIntroVC.view.leadingAnchor),
+            titleBackground.trailingAnchor.constraint(equalTo: teamIntroVC.view.trailingAnchor),
+            titleBackground.centerXAnchor.constraint(equalTo: teamIntroVC.view.centerXAnchor),
+            
+            detailLabel.topAnchor.constraint(equalTo: titleBackground.bottomAnchor, constant: 30),
+            detailLabel.leadingAnchor.constraint(equalTo: teamIntroVC.view.leadingAnchor, constant: 20),
+            detailLabel.trailingAnchor.constraint(equalTo: teamIntroVC.view.trailingAnchor, constant: -20),
+            
+            detailBorder.topAnchor.constraint(equalTo: detailLabel.topAnchor, constant:  -20),
+            detailBorder.leadingAnchor.constraint(equalTo: teamIntroVC.view.leadingAnchor),
+            detailBorder.trailingAnchor.constraint(equalTo: teamIntroVC.view.trailingAnchor),
+            detailBorder.centerXAnchor.constraint(equalTo: teamIntroVC.view.centerXAnchor)
+            
+        ])
+        detailBorder.heightAnchor.constraint(equalTo: detailLabel.heightAnchor, constant: 40).isActive = true
+        
+        
+        navigationController?.pushViewController(teamIntroVC, animated: true)
     }
     
     @objc func navigateToPromises() {
-        let promisesVC = UIViewController() // 여기에 실제 약속 화면 추가
-        promisesVC.view.backgroundColor = .white
-        promisesVC.title = "약속"
-        navigationController?.pushViewController(promisesVC, animated: true)
+        let teamIntroVC = UIViewController() // 여기에 실제 팀 소개 화면 추가
+        
+        let backgroundHeight: CGFloat = 100
+        let pageLabel: UILabel = {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = "약속"
+            label.font = .boldSystemFont(ofSize: 32)
+            label.textColor = .white
+            
+            return label
+        }()
+        let detailLabel: UILabel = {
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = "09:00\n출석 체크\n\n09:30 - 10:30\n알고리즘 풀면서 뇌 깨우기\n\n12:00 - 13:00\n점심시간\n\n16:00\n중간 인증\n\n18:00 - 19:00\n저녁시간\n\n19:00 - 20:30\n코드 공유, 의견 나누기\n\n20:30 ~\nTIL 작성하기"
+            label.textColor = .white
+            label.numberOfLines = 0
+            label.lineBreakMode = .byWordWrapping
+            label.font = .systemFont(ofSize: 20)
+            
+            return label
+        }()
+        let titleBackground: UIView = {
+            let background = UIView()
+            background.translatesAutoresizingMaskIntoConstraints = false
+            background.backgroundColor = .titleMain
+            
+            return background
+        }()
+        let detailBorder: UIView = {
+            let border = UIView()
+            border.translatesAutoresizingMaskIntoConstraints = false
+            border.backgroundColor = .clear
+            border.layer.borderColor = UIColor.titleMain.cgColor
+            border.layer.borderWidth = 4
+            
+            return border
+        }()
+        
+        teamIntroVC.view.backgroundColor = .black
+        teamIntroVC.view.addSubview(titleBackground)
+        teamIntroVC.view.addSubview(pageLabel)
+        teamIntroVC.view.addSubview(detailLabel)
+        teamIntroVC.view.addSubview(detailBorder)
+        
+        NSLayoutConstraint.activate([
+            pageLabel.topAnchor.constraint(equalTo: teamIntroVC.view.safeAreaLayoutGuide.topAnchor, constant: backgroundHeight / 2),
+            pageLabel.centerXAnchor.constraint(equalTo: teamIntroVC.view.centerXAnchor),
+            
+            titleBackground.topAnchor.constraint(equalTo: teamIntroVC.view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            titleBackground.heightAnchor.constraint(equalToConstant: backgroundHeight),
+            titleBackground.leadingAnchor.constraint(equalTo: teamIntroVC.view.leadingAnchor),
+            titleBackground.trailingAnchor.constraint(equalTo: teamIntroVC.view.trailingAnchor),
+            titleBackground.centerXAnchor.constraint(equalTo: teamIntroVC.view.centerXAnchor),
+            
+            detailLabel.topAnchor.constraint(equalTo: titleBackground.bottomAnchor, constant: 30),
+            detailLabel.leadingAnchor.constraint(equalTo: teamIntroVC.view.leadingAnchor, constant: 20),
+            detailLabel.trailingAnchor.constraint(equalTo: teamIntroVC.view.trailingAnchor, constant: -20),
+            
+            detailBorder.topAnchor.constraint(equalTo: detailLabel.topAnchor, constant:  -20),
+            detailBorder.leadingAnchor.constraint(equalTo: teamIntroVC.view.leadingAnchor),
+            detailBorder.trailingAnchor.constraint(equalTo: teamIntroVC.view.trailingAnchor),
+            detailBorder.centerXAnchor.constraint(equalTo: teamIntroVC.view.centerXAnchor)
+            
+        ])
+        detailBorder.heightAnchor.constraint(equalTo: detailLabel.heightAnchor, constant: 40).isActive = true
+        
+        
+        navigationController?.pushViewController(teamIntroVC, animated: true)
     }
     
     // MainContentViewController로 이동 (팀원 소개 클릭 시)

@@ -4,9 +4,9 @@ import UIKit
 let mockData: [Person] = [
     Person(
         name: "김석준",
-        hashtag: "#파란색 #해산물NO #게임 #헬스 #옷구경 #돌림판",
-        imageName: "man1",
-        tmi: "장점: 최대한 긍정적으로 생각하기 \n협업스타일: 최대한 맞추려고 노력하고 협업을 하다가 이건 아니다 싶을 때 즉각적인 질문과 피드백으로 빠르게 문제 상황을 해결하는 것을 좋아합니다.",
+        hashtag: "#ISTP #파란색 #해산물NO #게임",
+        imageName: "1",
+        tmi: "장점: 최대한 긍정적으로 생각하기 \n\n협업스타일: 최대한 맞추려고 노력하고 협업을 하다가 이건 아니다 싶을 때 즉각적인 질문과 피드백으로 빠르게 문제 상황을 해결하는 것을 좋아합니다.",
         socialLinks: [
             "https://github.com",
             "https://instagram.com",
@@ -15,9 +15,9 @@ let mockData: [Person] = [
     ),
     Person(
         name: "양정무",
-        hashtag: "#검은색 #소고기 #클라이밍 #클라이밍 러버 #브랜드",
-        imageName: "man2",
-        tmi: "장점: 빠른 상황판단 \n협업 스타일: 최대한 협조하기",
+        hashtag: "#INTP #검은색 #소고기 #클라이밍",
+        imageName: "2",
+        tmi: "장점: 빠르게 상황판단하고 행동하기 \n\n협업 스타일: 최대한 팀원과 리더의 의견에 협조하기",
         socialLinks: [
             "https://github.com/kimsukjun",
             "https://instagram.com/kimsukjun",
@@ -26,9 +26,9 @@ let mockData: [Person] = [
     ),
     Person(
         name: "박진홍",
-        hashtag: "#올리브 그린 #면과고기조합 #커피 브루잉 #강아지 #봄이 #배변 #산책",
-        imageName: "man3",
-        tmi: "장점: 이해와 응용이 빠른편입니다. \n협업스타일: 반드시 반대해야 할 이유나 비합리적인 선택만 아니라면 대부분의 의견에 동의하고 잘 따라가는 편입니다.",
+        hashtag: "#INTJ #올리브그린 #커피 #강아지",
+        imageName: "3",
+        tmi: "장점: 비교적 빠른 이해와 응용 \n\n협업스타일: 팀원의 의견에 대한 근거나 이유를 생각해보고 비합리적인 선택만 아니라면 대부분의 의견에 동의하고 잘 따라가는 편입니다.",
         socialLinks: [
             "https://github.com/kimsukjun",
             "https://instagram.com/kimsukjun",

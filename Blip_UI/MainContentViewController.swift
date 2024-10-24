@@ -34,9 +34,9 @@ class MainContentViewController: UIViewController {
 
         // 이미지 4개 추가
         for index in 1...3 {
-            let imageView = UIImageView(image: UIImage(named: "man\(index)"))
+            let imageView = UIImageView(image: UIImage(named: "zep\(index)"))
             imageView.contentMode = .scaleAspectFit
-            imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 500)
+            imageView.frame = CGRect(x: 0, y: 0, width: 150*1.5, height: 200*1.5)
             stackView.addArrangedSubview(imageView)
 
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollImageTapped(_:)))

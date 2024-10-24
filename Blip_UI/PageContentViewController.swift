@@ -52,6 +52,13 @@ class PageContentViewController: UIViewController, UIScrollViewDelegate {
         return imageView
     }()
     
+    var favoriteImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
     var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -63,6 +70,7 @@ class PageContentViewController: UIViewController, UIScrollViewDelegate {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = .secondary
         return label
     }()
     
@@ -72,6 +80,16 @@ class PageContentViewController: UIViewController, UIScrollViewDelegate {
         label.font = UIFont.systemFont(ofSize: 18)
         label.numberOfLines = 0
         return label
+    }()
+    
+    let tmiBorder: UIView = {
+        let border = UIView()
+        border.translatesAutoresizingMaskIntoConstraints = false
+        border.backgroundColor = .clear
+        border.layer.borderColor = UIColor.titleMain.cgColor
+        border.layer.borderWidth = 4
+        
+        return border
     }()
     
     var spacer: UIView = {
@@ -117,6 +135,7 @@ class PageContentViewController: UIViewController, UIScrollViewDelegate {
         contentView.addSubview(hashtagLabel)
         contentView.addSubview(tmiLabel)
         contentView.addSubview(socialButtonsStackView)
+        contentView.addSubview(favoriteImageView)
         contentView.addSubview(spacer)
         
         NSLayoutConstraint.activate([
@@ -135,27 +154,34 @@ class PageContentViewController: UIViewController, UIScrollViewDelegate {
             hashtagLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             hashtagLabel.heightAnchor.constraint(equalToConstant: 50),
             
-            tmiLabel.topAnchor.constraint(equalTo: hashtagLabel.bottomAnchor, constant: 10),
+            tmiLabel.topAnchor.constraint(equalTo: hashtagLabel.bottomAnchor, constant: 20),
             tmiLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            tmiLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             tmiLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
+            favoriteImageView.topAnchor.constraint(equalTo: tmiLabel.bottomAnchor, constant: 20),
+            favoriteImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            favoriteImageView.widthAnchor.constraint(equalToConstant: 400),
+            favoriteImageView.heightAnchor.constraint(equalToConstant: 400),
+            
             // Social Buttons StackView layout
-            socialButtonsStackView.topAnchor.constraint(equalTo: tmiLabel.bottomAnchor, constant: 20),
+            socialButtonsStackView.topAnchor.constraint(equalTo: favoriteImageView.bottomAnchor, constant: 20),
             socialButtonsStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
             spacer.topAnchor.constraint(equalTo: socialButtonsStackView.bottomAnchor, constant: 20),
-            spacer.heightAnchor.constraint(equalToConstant: screenHeight - (nameLabel.frame.height + hashtagLabel.frame.height + tmiLabel.frame.height + 40)),
+            spacer.heightAnchor.constraint(equalToConstant: 30),
             
             spacer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
     
     func configurePerson() {
-        profileImageView.image = UIImage(named: person.imageName)
+        profileImageView.image = UIImage(named: "man\(person.imageName)")
+        favoriteImageView.image = UIImage(named: "favorite\(person.imageName)")
         nameLabel.text = person.name
         nameLabel.textColor = .white // Set font color to white
         hashtagLabel.text = person.hashtag
-        hashtagLabel.textColor = .white // Set font color to white
+        hashtagLabel.textColor = .secondary // Set font color to white
         tmiLabel.text = person.tmi
         tmiLabel.textColor = .white // Set font color to white
 
@@ -173,7 +199,7 @@ class PageContentViewController: UIViewController, UIScrollViewDelegate {
                 button.setImage(UIImage(systemName: "link"), for: .normal) // Default link icon
             }
             
-            button.tintColor = .purple
+            button.tintColor = .secondary
             button.addTarget(self, action: #selector(socialButtonTapped(_:)), for: .touchUpInside)
             button.tag = index
             socialButtonsStackView.addArrangedSubview(button)
